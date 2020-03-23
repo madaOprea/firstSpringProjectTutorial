@@ -19,7 +19,7 @@ public class UserServiceImplementation implements UserServices {
 	@Autowired
 	UserRepository userRepository;
 	
-	@Autowired
+	//@Autowired
 	Utils utils;
 	
 	@Autowired
