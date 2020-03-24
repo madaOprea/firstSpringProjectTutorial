@@ -1,5 +1,6 @@
 package com.apps.service;
 
+import model.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,13 +14,15 @@ import com.shared.Utils;
 
 import dto.UserDTO;
 
+import java.util.ArrayList;
+
 @Service
 public class UserServiceImplementation implements UserServices {
 
 	@Autowired
 	UserRepository userRepository;
 	
-	//@Autowired
+	@Autowired
 	Utils utils;
 	
 	@Autowired
@@ -44,8 +47,12 @@ public class UserServiceImplementation implements UserServices {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		UserEntity userEntity = userRepository.findByEmail(email);
+		
+		if (userEntity != null) throw new UsernameNotFoundException(email);
+		
+		//return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
 		return null;
 	}
 
