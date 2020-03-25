@@ -90,8 +90,6 @@ public class UserEntity implements Serializable {
 		this.emailVerificationToken = emailVerificationToken;
 	}
 
-
-
 	public Boolean getEmailVerificationStatus() {
 		return emailVerificationStatus;
 	}

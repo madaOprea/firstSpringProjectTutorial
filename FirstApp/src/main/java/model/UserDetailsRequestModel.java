@@ -1,13 +1,13 @@
 package model;
 
-public class User {
+public class UserDetailsRequestModel {
 
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
 	
-	public User() {
+	public UserDetailsRequestModel() {
 		// TODO Auto-generated constructor stub
 	}
 

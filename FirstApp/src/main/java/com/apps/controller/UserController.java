@@ -8,7 +8,7 @@ import com.apps.entity.UserEntity;
 import com.apps.repository.UserRepository;
 import com.apps.service.UserServices;
 import dto.UserDTO;
-import model.User;
+import model.UserDetailsRequestModel;
 
 @RestController 
 @RequestMapping("users")
@@ -26,7 +26,7 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public UserDTO createUser(@RequestBody User user) {
+	public UserDTO createUser(@RequestBody UserDetailsRequestModel user) {
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user,  userEntity);
 		userRepository.save(userEntity);

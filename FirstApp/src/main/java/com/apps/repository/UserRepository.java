@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.apps.entity.UserEntity;
 
-import model.User;
+import model.UserDetailsRequestModel;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Long>{
