@@ -1,6 +1,7 @@
 package com.apps.service;
 
-import model.UserDetailsRequestModel;
+import java.util.ArrayList;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -11,11 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.apps.entity.UserEntity;
 import com.apps.repository.UserRepository;
-import com.shared.Utils;
+import com.apps.shared.Utils;
 
 import dto.UserDTO;
-
-import java.util.ArrayList;
 
 @Service
 public class UserServiceImplementation implements UserServices {
