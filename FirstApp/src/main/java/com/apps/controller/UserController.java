@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import com.apps.entity.UserEntity;
 import com.apps.io.repository.UserRepository;
 import com.apps.service.UserServices;
+import com.response.UserRest;
+
 import dto.UserDTO;
 import model.UserDetailsRequestModel;
 
 @RestController 
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
@@ -26,24 +28,16 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public UserDTO createUser(@RequestBody UserDetailsRequestModel user) {
-		UserEntity userEntity = new UserEntity();
-		BeanUtils.copyProperties(user,  userEntity);
-		userRepository.save(userEntity);
-		
-		UserDTO userDTO = new UserDTO();
-		BeanUtils.copyProperties(userEntity, userDTO);
-		
-		UserEntity storedUserDetail = userRepository.save(userEntity);
-		UserDTO createdUser = userServices.createUser(userDTO);
-		BeanUtils.copyProperties(storedUserDetail, createdUser);
-		return userDTO;
-	}
+	public UserRest createUser(@RequestBody UserDetailsRequestModel user) {
+		UserRest userRest = new UserRest();
 	
-//	@PostMapping
-//	public String createUser() {
-//		return "a new user was created!";
-//	}
+		UserDTO userDTO = new UserDTO();
+		BeanUtils.copyProperties(userRest, userDTO);
+
+		UserDTO createdUser = userServices.createUser(userDTO);
+		BeanUtils.copyProperties(userRest, createdUser);
+		return userRest;
+	}
 	
 	@PutMapping
 	public String updateUser() {
