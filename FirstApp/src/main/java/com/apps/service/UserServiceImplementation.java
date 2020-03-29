@@ -30,12 +30,11 @@ public class UserServiceImplementation implements UserServices {
 	
 	@Override
 	public UserDTO createUser(UserDTO userDTO) {
-
-		if (userRepository.findByEmail(userDTO.getEmail()) != null) throw new RuntimeException("qwerty");
+		UserEntity userEntity = userRepository.findByEmail(userDTO.getEmail());
 		
-		UserEntity userEntity = new UserEntity();
-		BeanUtils.copyProperties(userDTO,  userEntity);
+		if (userEntity == null) throw new RuntimeException("qwerty");
 		
+		BeanUtils.copyProperties(userDTO,  userEntity);	
 		String publicUserID = utils.generateUserID(30);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
 		userEntity.setUserId(publicUserID);
@@ -50,7 +49,7 @@ public class UserServiceImplementation implements UserServices {
 	public UserDTO getUser(String email) {
 		UserEntity userEntity = userRepository.findByEmail(email);
 		
-		if (userRepository.findByEmail(email) != null) throw new RuntimeException("qwerty");
+		if (userEntity == null) throw new RuntimeException("qwerty");
 		
 		UserDTO returnValue = new UserDTO();
 		BeanUtils.copyProperties(userEntity, returnValue);
@@ -61,8 +60,18 @@ public class UserServiceImplementation implements UserServices {
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		UserEntity userEntity = userRepository.findByEmail(email);
 		
-		if (userEntity != null) throw new UsernameNotFoundException(email);
+		if (userEntity == null) throw new UsernameNotFoundException(email);
 		
 		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
+	}
+
+	@Override
+	public UserDTO getUserByUserId(String userID) {
+		UserDTO returnValue = new UserDTO();
+		UserEntity userEntity = userRepository.findByUserId(userID);
+		
+		if (userEntity == null) throw new UsernameNotFoundException(userID);
+		BeanUtils.copyProperties(userEntity, returnValue);
+		return returnValue;
 	}
 }
