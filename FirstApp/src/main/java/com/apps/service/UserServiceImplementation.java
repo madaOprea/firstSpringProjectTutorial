@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.apps.entity.UserEntity;
-import com.apps.io.repository.UserRepository;
+import com.apps.repository.UserRepository;
 import com.apps.shared.Utils;
 
 import dto.UserDTO;
@@ -47,17 +47,6 @@ public class UserServiceImplementation implements UserServices {
 	}
 
 	@Override
-	public UserDTO getUser(String email) {
-		UserEntity userEntity = userRepository.findByEmail(email);
-		
-		if (userRepository.findByEmail(email) != null) throw new RuntimeException("qwerty");
-		
-		UserDTO returnValue = new UserDTO();
-		BeanUtils.copyProperties(userEntity, returnValue);
-		return returnValue;
-	}
-	
-	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		UserEntity userEntity = userRepository.findByEmail(email);
 		
@@ -65,4 +54,11 @@ public class UserServiceImplementation implements UserServices {
 		
 		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
 	}
+
+	@Override
+	public UserDTO getUser(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
