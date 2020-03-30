@@ -32,7 +32,7 @@ public class UserServiceImplementation implements UserServices {
 	public UserDTO createUser(UserDTO userDTO) {
 		UserEntity userEntity = userRepository.findByEmail(userDTO.getEmail());
 		
-		if (userEntity == null) throw new RuntimeException("qwerty");
+		if (userEntity != null) throw new RuntimeException("Attention!");
 		
 		BeanUtils.copyProperties(userDTO,  userEntity);	
 		String publicUserID = utils.generateUserID(30);
@@ -49,7 +49,7 @@ public class UserServiceImplementation implements UserServices {
 	public UserDTO getUser(String email) {
 		UserEntity userEntity = userRepository.findByEmail(email);
 		
-		if (userEntity == null) throw new RuntimeException("qwerty");
+		if (userEntity == null) throw new UsernameNotFoundException(email);
 		
 		UserDTO returnValue = new UserDTO();
 		BeanUtils.copyProperties(userEntity, returnValue);
