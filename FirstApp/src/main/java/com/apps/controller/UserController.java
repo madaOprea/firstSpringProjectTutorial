@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.apps.entity.UserEntity;
-import com.apps.repository.UserRepository;
+import com.apps.io.repository.UserRepository;
 import com.apps.service.UserServices;
 import dto.UserDTO;
 import model.UserDetailsRequestModel;
