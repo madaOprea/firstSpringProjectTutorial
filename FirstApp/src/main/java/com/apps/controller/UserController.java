@@ -13,7 +13,7 @@ import dto.UserDTO;
 import model.UserDetailsRequestModel;
 
 @RestController 
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
@@ -22,25 +22,21 @@ public class UserController {
 	@Autowired
 	UserRepository userRepository;
 	
-	@GetMapping(path = "/{id}")
-	public UserRest getUser(@PathVariable String id) {
-		UserRest returnValue = new UserRest();
-		
-		UserDTO userDTO = userServices.getUserByUserId(id);
-		BeanUtils.copyProperties(userDTO, returnValue);
-		return returnValue;
+	@GetMapping
+	public String getUser() {
+		return "user got!";
 	}
 	
 	@PostMapping
-	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
-		UserRest returnValue = new UserRest();
+	public UserRest createUser(@RequestBody UserDetailsRequestModel user) {
+		UserRest userRest = new UserRest();
 	
 		UserDTO userDTO = new UserDTO();
-		BeanUtils.copyProperties(userDetails, userDTO);
+		BeanUtils.copyProperties(userRest, userDTO);
 
 		UserDTO createdUser = userServices.createUser(userDTO);
-		BeanUtils.copyProperties(createdUser, returnValue);
-		return returnValue;
+		BeanUtils.copyProperties(userRest, createdUser);
+		return userRest;
 	}
 	
 	@PutMapping

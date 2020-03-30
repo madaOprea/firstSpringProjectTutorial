@@ -8,5 +8,4 @@ import model.UserDetailsRequestModel;
 public interface UserServices extends UserDetailsService {
 	UserDTO createUser(UserDTO DTO);
 	UserDTO getUser(String email);
-	UserDTO getUserByUserId(String userID);
 }
