@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import com.apps.entity.UserEntity;
+import com.apps.exceptions.UserServiceException;
 import com.apps.io.repository.UserRepository;
 import com.apps.service.UserServices;
 import com.response.ErrorMessages;
@@ -39,7 +40,7 @@ public class UserController {
 		System.out.print("Here 0000000000000000 ");
 		UserRest returnValue = new UserRest();
 		
-		//if (userDetails.getFirstName().isEmpty()) throw new Exception(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+		if (userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 	
 		UserDTO userDTO = new UserDTO();
 		BeanUtils.copyProperties(userDetails, userDTO);

@@ -31,22 +31,27 @@ public class UserServiceImplementation implements UserServices {
 	
 	@Override
 	public UserDTO createUser(UserDTO userDTO) {
-		UserEntity userEntity = userRepository.findByEmail(userDTO.getEmail());
+		//UserEntity userEntity = userRepository.findByEmail(userDTO.getEmail());
 		System.out.print("User Services 00000 ----------");
 		//if (userEntity != null) throw new RuntimeException("The user already exists!");
-		BeanUtils.copyProperties(userEntity, userDTO);
+		//BeanUtils.copyProperties(userEntity, userDTO);
 		//BeanUtils.copyProperties(userDTO,  userEntity);	// This is the problem!
+		
+		UserDTO returnValue = new UserDTO();
+		BeanUtils.copyProperties(userDTO, returnValue);
 		String publicUserID = utils.generateUserID(30);
 		System.out.print("User Services ----------");
-		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-		System.out.print("userEntity.getEncrytedPassword() = " + userEntity.getEncryptedPassword());
-		userEntity.setUserId(publicUserID);
+		returnValue.setEncryptedPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+		System.out.print("userEntity.getEncrytedPassword() = " + returnValue.getEncryptedPassword());
+		returnValue.setUserId(publicUserID);
 		System.out.print("publicUserID = " + publicUserID);
 		
-		UserEntity storedUserDetails = userRepository.save(userEntity);
-		System.out.print("storedUserDetails" + storedUserDetails.getFirstName());
-		UserDTO returnValue = new UserDTO();
-		BeanUtils.copyProperties(storedUserDetails, returnValue);
+		UserEntity entityToBeSavedIntoDB = new UserEntity();
+		BeanUtils.copyProperties(returnValue, entityToBeSavedIntoDB);
+		userRepository.save(entityToBeSavedIntoDB);
+		//System.out.print("storedUserDetails" + entityToBeSavedIntoDB.getFirstName());
+		//UserDTO returnValue = new UserDTO();
+		BeanUtils.copyProperties(entityToBeSavedIntoDB, returnValue);
 		return returnValue;
 	}
 
