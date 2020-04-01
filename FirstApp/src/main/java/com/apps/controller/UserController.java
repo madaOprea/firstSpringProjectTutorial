@@ -37,17 +37,16 @@ public class UserController {
 	@PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
 			     produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception{
-		System.out.print("Here 0000000000000000 ");
 		UserRest returnValue = new UserRest();
 		
 		if (userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 	
 		UserDTO userDTO = new UserDTO();
 		BeanUtils.copyProperties(userDetails, userDTO);
-		System.out.print("Here 11111111111 ");
+		
 		UserDTO createdUser = userServices.createUser(userDTO);
-		System.out.print("Here 2222222222 ");
 		BeanUtils.copyProperties(createdUser, returnValue);
+		
 		return returnValue;
 	}
 	

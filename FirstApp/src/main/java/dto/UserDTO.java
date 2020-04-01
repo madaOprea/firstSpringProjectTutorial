@@ -16,7 +16,7 @@ public class UserDTO implements Serializable{
 	private Boolean emailVerificationStatus = false;
 	
 	public UserDTO() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public long getId() {

@@ -16,13 +16,13 @@ public class UserEntity implements Serializable {
 	@GeneratedValue
 	private long id;
 	
-	//@Column(nullable=false)
-	private String userId; //will be send back to mobile app
+	@Column(nullable = false)
+	private String userId; 
 	
-	//@Column(nullable=false, length=50)
+	@Column(nullable = false, length=50)
 	private String firstName;
 	
-	//@Column(nullable=false, length=50)
+	@Column(nullable = false, length=50)
 	private String lastName;
 	
 	@Column(length=50)
@@ -34,6 +34,10 @@ public class UserEntity implements Serializable {
 	
 	private Boolean emailVerificationStatus;
 		
+	public UserEntity() {
+		
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -97,9 +101,4 @@ public class UserEntity implements Serializable {
 	public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
 		this.emailVerificationStatus = emailVerificationStatus;
 	}
-
-	public UserEntity() {
-		// TODO Auto-generated constructor stub
-	}
-
 }
