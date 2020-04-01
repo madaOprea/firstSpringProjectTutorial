@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 public class AppProperties {
 	
 	@Autowired
-	private static Environment env;
+	private Environment env;
 	
-	public static String getTokenSecret() {
+	public String getTokenSecret() {
 		return env.getProperty("tokenSecret");
 	}
 }

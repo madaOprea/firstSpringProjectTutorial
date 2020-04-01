@@ -6,7 +6,7 @@ import dto.UserDTO;
 import model.UserDetailsRequestModel;
 
 public interface UserServices extends UserDetailsService {
-	UserDTO createUser(UserDTO DTO);
+	UserDTO createUser(UserDTO userDTO);
 	UserDTO getUser(String email);
 	UserDTO getUserByUserId(String userID);
 }

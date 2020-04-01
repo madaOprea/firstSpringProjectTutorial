@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.apps.entity.UserEntity;
 import com.apps.io.repository.UserRepository;
 import com.apps.shared.Utils;
+import com.apps.security.SecurityConstants;
 
 import dto.UserDTO;
 
@@ -31,15 +32,19 @@ public class UserServiceImplementation implements UserServices {
 	@Override
 	public UserDTO createUser(UserDTO userDTO) {
 		UserEntity userEntity = userRepository.findByEmail(userDTO.getEmail());
-		
-		if (userEntity != null) throw new RuntimeException("Attention!");
-		
-		BeanUtils.copyProperties(userDTO,  userEntity);	
+		System.out.print("User Services 00000 ----------");
+		//if (userEntity != null) throw new RuntimeException("The user already exists!");
+		BeanUtils.copyProperties(userEntity, userDTO);
+		//BeanUtils.copyProperties(userDTO,  userEntity);	// This is the problem!
 		String publicUserID = utils.generateUserID(30);
+		System.out.print("User Services ----------");
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+		System.out.print("userEntity.getEncrytedPassword() = " + userEntity.getEncryptedPassword());
 		userEntity.setUserId(publicUserID);
+		System.out.print("publicUserID = " + publicUserID);
 		
 		UserEntity storedUserDetails = userRepository.save(userEntity);
+		System.out.print("storedUserDetails" + storedUserDetails.getFirstName());
 		UserDTO returnValue = new UserDTO();
 		BeanUtils.copyProperties(storedUserDetails, returnValue);
 		return returnValue;
