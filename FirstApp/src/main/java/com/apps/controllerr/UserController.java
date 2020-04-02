@@ -67,10 +67,14 @@ public class UserController {
 		return returnValue;
 	}
 	
-	@DeleteMapping(path = "/{id}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE} )
-	public OperationStatusModel deleteUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails)  {
+	@DeleteMapping(path = "/{id}", 
+			produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE} )
+	public OperationStatusModel deleteUser(@PathVariable String userId, @RequestBody UserDetailsRequestModel userDetails)  {
 		OperationStatusModel returnValue = new OperationStatusModel();
 		returnValue.setOperationName(RequestOperationName.DELETE.name());
+		
+		userServices.deleteUser(userId);
+		
 		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
 		return returnValue;
 	}
