@@ -17,13 +17,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.apps.SpringApplicationContext;
+import com.apps.model.request.UserLoginRequestModel;
 import com.apps.service.UserServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dto.UserDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import model.UserLoginRequestModel;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

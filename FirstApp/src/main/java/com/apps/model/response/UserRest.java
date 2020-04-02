@@ -1,4 +1,4 @@
-package com.response;
+package com.apps.model.response;
 
 public class UserRest {
 

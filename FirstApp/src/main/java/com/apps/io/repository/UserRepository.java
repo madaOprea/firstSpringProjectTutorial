@@ -4,8 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.apps.entity.UserEntity;
-
-import model.UserDetailsRequestModel;
+import com.apps.model.request.UserDetailsRequestModel;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Long>{

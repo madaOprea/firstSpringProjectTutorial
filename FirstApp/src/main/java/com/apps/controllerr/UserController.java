@@ -1,4 +1,4 @@
-package com.apps.controller;
+package com.apps.controllerr;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import com.apps.entity.UserEntity;
 import com.apps.exceptions.UserServiceException;
 import com.apps.io.repository.UserRepository;
+import com.apps.model.request.UserDetailsRequestModel;
+import com.apps.model.response.ErrorMessages;
+import com.apps.model.response.OperationStatusModel;
+import com.apps.model.response.RequestOperationStatus;
+import com.apps.model.response.UserRest;
 import com.apps.service.UserServices;
-import com.response.ErrorMessages;
-import com.response.UserRest;
 
 import dto.UserDTO;
-import model.UserDetailsRequestModel;
 
 @RestController 
 @RequestMapping("users")
@@ -50,13 +52,26 @@ public class UserController {
 		return returnValue;
 	}
 	
-	@PutMapping
-	public String updateUser() {
-		return "an user was deleted!";
+	@PutMapping(path = "/{id}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE} )
+	public UserRest updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails) {
+		UserRest returnValue = new UserRest();
+		
+		if (userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+	
+		UserDTO userDTO = new UserDTO();
+		BeanUtils.copyProperties(userDetails, userDTO);
+		
+		UserDTO updatedUser = userServices.updateUser(id, userDTO);
+		BeanUtils.copyProperties(updatedUser, returnValue);
+		
+		return returnValue;
 	}
 	
-	@DeleteMapping
-	public String deleteUser() {
-		return "an user was deleted!";
+	@DeleteMapping(path = "/{id}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE} )
+	public OperationStatusModel deleteUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails)  {
+		OperationStatusModel returnValue = new OperationStatusModel();
+		returnValue.setOperationName(RequestOperationName.DELETE.name());
+		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+		return returnValue;
 	}
 }

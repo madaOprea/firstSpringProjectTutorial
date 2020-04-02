@@ -1,4 +1,4 @@
-package com.response;
+package com.apps.model.response;
 
 public enum ErrorMessages {
 	
