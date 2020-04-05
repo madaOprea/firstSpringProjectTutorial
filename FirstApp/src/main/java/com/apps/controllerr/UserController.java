@@ -63,7 +63,7 @@ public class UserController {
 		UserDTO userDTO = new UserDTO();
 		BeanUtils.copyProperties(userDetails, userDTO);
 		
-		UserDTO updatedUser = null;//userServices.updateUser(id, userDTO);
+		UserDTO updatedUser = userServices.updateUser(id, userDTO);
 		BeanUtils.copyProperties(updatedUser, returnValue);
 		
 		return returnValue;
@@ -75,7 +75,7 @@ public class UserController {
 		OperationStatusModel returnValue = new OperationStatusModel();
 		returnValue.setOperationName(RequestOperationName.DELETE.name());
 		
-		//userServices.deleteUser(userId);
+		userServices.deleteUser(userId);
 		
 		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
 		return returnValue;
@@ -85,7 +85,7 @@ public class UserController {
 	public List<UserRest> getUsers(@RequestParam(value = "page", defaultValue = "1") int page,
 			@RequestParam(value = "limit", defaultValue = "25") int limit) {
 		List<UserRest> returnValue = new ArrayList<>();
-		List<UserDTO> users = null;// userServices.getUsers(page, limit);
+		List<UserDTO> users = userServices.getUsers(page, limit);
 		
 		for (UserDTO userDTO : users) {
 			UserRest userModel = new UserRest();
