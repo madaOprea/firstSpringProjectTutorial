@@ -38,6 +38,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         try {
             UserLoginRequestModel userLoginRequestModel = new ObjectMapper().readValue(request.getInputStream(), UserLoginRequestModel.class);
 
+            System.out.print("--- userLoginRequestModel = " + userLoginRequestModel.getEmail());
+            
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             userLoginRequestModel.getEmail(),
@@ -58,10 +60,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.getTokenSecret())
                 .compact();
-        UserServices userServices = (UserServices) SpringApplicationContext.getBean("userServiciesImplementation");
-        UserDTO userDTO = userServices.getUser(userName);
+        System.out.println("TOKEN = " + token);
+        //UserServices userServices = (UserServices) SpringApplicationContext.getBean("userServiciesImplementation");
+        //UserDTO userDTO = userServices.getUser(userName);
         
         response.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
-        response.addHeader("UserID", userDTO.getUserId());
+        //response.addHeader("UserID", userDTO.getUserId());
     }
 }

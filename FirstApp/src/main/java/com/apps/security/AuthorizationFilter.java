@@ -25,7 +25,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		String header = request.getHeader(SecurityConstants.HEADER_STRING);
-		
+		System.out.print("--- header = " + header);
 		if (header == null || header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
 			chain.doFilter(request, response);
 			return;
@@ -47,7 +47,7 @@ public class AuthorizationFilter extends BasicAuthenticationFilter{
 					.parseClaimsJws(token)
 					.getBody()
 					.getSubject();
-		
+			System.out.println("USER = " + user);
 			if (user != null) {
 				return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
 			}
