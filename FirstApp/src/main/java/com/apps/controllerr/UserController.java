@@ -29,17 +29,19 @@ public class UserController {
 	@Autowired
 	UserRepository userRepository;
 	
-//	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE} )
-//	public UserRest getUser(@PathVariable String id) {
+	@GetMapping//(path = "/{id}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE} )
+	public String getUser() {//(@PathVariable String id) {
 //		UserRest returnValue = new UserRest();
 //		
 //		UserDTO userDTO = userServices.getUserByUserId(id);
 //		BeanUtils.copyProperties(userDTO, returnValue);
 //		return returnValue;
-//	}
+		return "aloooo";
+	}
 	
-	@PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
-			     produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+//	@PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE},
+//			     produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+	@PostMapping
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception{
 		UserRest returnValue = new UserRest();
 		
