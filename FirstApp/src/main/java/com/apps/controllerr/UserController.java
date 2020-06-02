@@ -3,6 +3,7 @@ package com.apps.controllerr;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -44,12 +45,12 @@ public class UserController {
 		UserRest returnValue = new UserRest();
 		
 		if (userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
-	
-		UserDTO userDTO = new UserDTO();
-		BeanUtils.copyProperties(userDetails, userDTO);
+
+		ModelMapper modelMapper = new ModelMapper();
+		UserDTO userDTO = modelMapper.map(userDetails, UserDTO.class);
 		
 		UserDTO createdUser = userServices.createUser(userDTO);
-		BeanUtils.copyProperties(createdUser, returnValue);
+		modelMapper.map(createdUser, returnValue);
 		
 		return returnValue;
 	}
@@ -82,7 +83,7 @@ public class UserController {
 	}
 	
 	@GetMapping(produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-	public List<UserRest> getUsers(@RequestParam(value = "page", defaultValue = "1") int page,
+	public List<UserRest> getUsers(@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "limit", defaultValue = "25") int limit) {
 		List<UserRest> returnValue = new ArrayList<>();
 		List<UserDTO> users = userServices.getUsers(page, limit);

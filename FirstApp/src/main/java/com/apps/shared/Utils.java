@@ -14,6 +14,10 @@ public class Utils {
     public String generateUserID(int length) {
         return generateRandomString(length);
     }
+    
+    public String generateAdressesID(int length) {
+        return generateRandomString(length);
+    }
 
     private String generateRandomString(int length) {
         StringBuilder returnValue = new StringBuilder(length);

@@ -3,6 +3,7 @@ package com.apps.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -74,18 +75,20 @@ public class UserServiceImplementation implements UserServices {
 
 	@Override
 	public UserDTO createUser(UserDTO userDTO) {
-		UserEntity userEntity = userRepository.findByEmail(userDTO.getEmail());
-		if (userEntity != null) throw new RuntimeException("The user already exists!");
+		if (userRepository.findByEmail(userDTO.getEmail()) != null) throw new RuntimeException("The user already exists!");
 		
 		//BeanUtils.copyProperties(userEntity, userDTO);
 		//BeanUtils.copyProperties(userDTO,  userEntity);	// This is the problem!
 		
 		UserDTO returnValue = new UserDTO();
-		BeanUtils.copyProperties(userDTO, returnValue);
+		//BeanUtils.copyProperties(userDTO, returnValue);
+		ModelMapper modelMapper = new ModelMapper();
+		UserEntity userEntity = modelMapper.map(userDTO,  UserEntity.class);
+		
 		String publicUserID = utils.generateUserID(30);
 		
-		returnValue.setEncryptedPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-		returnValue.setUserId(publicUserID);
+		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+		userEntity.setUserId(publicUserID);
 		
 		UserEntity entityToBeSavedIntoDB = new UserEntity();
 		BeanUtils.copyProperties(returnValue, entityToBeSavedIntoDB);
